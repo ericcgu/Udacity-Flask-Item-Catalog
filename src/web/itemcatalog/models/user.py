@@ -1,6 +1,7 @@
 from datetime import datetime
 from itemcatalog import db
 from flask_login import UserMixin
+from flask_dance.consumer.backend.sqla import OAuthConsumerMixin
 
 
 class User(db.Model, UserMixin):
@@ -27,3 +28,11 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User {}>'.format(self.name)
+
+
+class OAuth(db.Model, OAuthConsumerMixin):
+
+    __tablename__ = 'user_auth'
+
+    user_id = db.Column(db.Integer, db.ForeignKey(User.id))
+    user = db.relationship(User)
