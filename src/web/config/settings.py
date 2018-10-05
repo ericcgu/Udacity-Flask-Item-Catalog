@@ -24,6 +24,7 @@ class Dev:
     ENV = os.environ.get("ENV") or 'development'
     SERVER = os.environ.get("SERVER") or 'localhost'
     SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-dev-001.sqlite'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class Test(Dev):
@@ -32,6 +33,7 @@ class Test(Dev):
     ENV = os.environ.get("ENV") or 'test'
     SERVER = os.environ.get("SERVER") or "egu-nyc-dev-001"
     SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-test-001.sqlite'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
 class Prod(Test):
@@ -40,3 +42,4 @@ class Prod(Test):
     ENV = os.environ.get("ENV") or 'production'
     SERVER = os.environ.get("SERVER") or "egu-nyc-prd-001"
     SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-prd-001.sqlite'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
