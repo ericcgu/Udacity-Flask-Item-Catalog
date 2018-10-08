@@ -8,10 +8,7 @@ from itemcatalog.routes.main import main
 app = Flask(__name__)
 
 # Environment Configuration
-if os.environ['ENV'] == 'production':
-    app.config.from_object('config.settings.Prod')
-else:
-    app.config.from_object('config.settings.Dev')
+app.config.from_object('config.settings.' + os.environ['ENV'])
 
 # User Session Management
 login_manager = LoginManager(app)

@@ -1,13 +1,20 @@
 import os
+from enum import Enum
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-class Dev:
+class ValidEnvironments(Enum):
+    Development = 'Development',
+    Test = 'Test',
+    Production = 'Production'
+
+
+class Default:
     APP_NAME = "itemcatalog"
     TESTING = True
-    SECRET_KEY = os.environ.get("SECRET_KEY") or "development"
-    ENV = os.environ.get("ENV") or 'development'
+    SECRET_KEY = os.environ.get("SECRET_KEY") or "supersiikrit"
+    ENV = os.environ.get("ENV") or ValidEnvironments.Development
     SERVER = os.environ.get("SERVER") or 'localhost'
 
     SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-dev-001.sqlite'
@@ -23,19 +30,28 @@ class Dev:
     GOOGLE_OAUTH_CLIENT_USERINFO_URI = "/oauth2/v2/userinfo"
 
 
-class Test(Dev):
+class Development(Default):
     DEBUG = False
     TESTING = True
-    ENV = os.environ.get("ENV") or 'test'
+    ENV = os.environ.get("ENV") or ValidEnvironments.Development
     SERVER = os.environ.get("SERVER") or "egu-nyc-dev-001"
     SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-test-001.sqlite'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
-class Prod(Test):
+class Test(Default):
+    DEBUG = False
+    TESTING = True
+    ENV = os.environ.get("ENV") or ValidEnvironments.Test
+    SERVER = os.environ.get("SERVER") or "egu-nyc-dev-001"
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-test-001.sqlite'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+
+class Production(Default):
     DEBUG = False
     TESTING = False
-    ENV = os.environ.get("ENV") or 'production'
+    ENV = os.environ.get("ENV") or ValidEnvironments.Production
     SERVER = os.environ.get("SERVER") or "egu-nyc-prd-001"
     SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-prd-001.sqlite'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
