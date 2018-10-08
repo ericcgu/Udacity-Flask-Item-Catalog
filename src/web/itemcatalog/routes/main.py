@@ -1,5 +1,4 @@
-from flask import Blueprint
-from flask_login import login_required, current_user
+from flask import Blueprint, render_template
 
 
 main = Blueprint('main', __name__)
@@ -7,6 +6,5 @@ main = Blueprint('main', __name__)
 
 @main.route('/')
 @main.route("/home")
-@login_required
 def index():
-    return '<h1>You are logged in as {}</h1>'.format(current_user.name)
+    return render_template('home.html', title='About')

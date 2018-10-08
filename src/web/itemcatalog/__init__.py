@@ -23,3 +23,6 @@ from itemcatalog.routes.userauth import userauth # noqa:E401
 app.register_blueprint(userauth)
 
 app.register_blueprint(main)
+
+from itemcatalog.routes.category import category # noqa:E401
+app.register_blueprint(category)

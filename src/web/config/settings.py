@@ -35,7 +35,7 @@ class Development(Default):
     TESTING = True
     ENV = os.environ.get("ENV") or ValidEnvironments.Development
     SERVER = os.environ.get("SERVER") or "egu-nyc-dev-001"
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-test-001.sqlite'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///egu-nyc-dev-001.sqlite'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 
