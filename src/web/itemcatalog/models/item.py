@@ -1,5 +1,5 @@
 from datetime import datetime
-from itemcatalog import db
+from . import db
 
 
 class Item(db.Model):

@@ -1,8 +1,13 @@
 import os
 import config  # noqa:E401
-from flask import Flask, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, redirect, url_for, session
 from flask_dance.contrib.google import make_google_blueprint, google
+from flask_dance.consumer.backend.sqla import SQLAlchemyBackend
+from flask_login import (current_user, LoginManager, login_required,
+                         login_user, logout_user)
+from flask_dance.consumer import oauth_authorized
+from sqlalchemy.orm.exc import NoResultFound
+from oauthlib.oauth2.rfc6749.errors import InvalidClientIdError
 
 app = Flask(__name__)
 
@@ -12,9 +17,11 @@ if os.environ['ENV'] == 'production':
 else:
     app.config.from_object('config.settings.Dev')
 
+# User Session Management
+login_manager = LoginManager(app)
+
 # Database
-db = SQLAlchemy(app)
-from .models import user, category, item # noqa:E401
+from .models import db, user, category, item # noqa:E401
 db.create_all()
 db.session.commit()
 
@@ -24,20 +31,69 @@ app.secret_key = app.config['GOOGLE_OAUTH_CLIENT_SECRET']
 google_blueprint = make_google_blueprint(
     client_id=app.config['GOOGLE_OAUTH_CLIENT_ID'],
     client_secret=app.secret_key,
-    scope=app.config['GOOGLE_OAUTH_CLIENT_SCOPE']
+    scope=app.config['GOOGLE_OAUTH_CLIENT_SCOPE'],
+    offline=True
     )
 
 
-@app.route("/")
-@app.route("/home")
-def home():
-    return "<h1>Home Page</h1>"
+google_blueprint.backend = SQLAlchemyBackend(user.UserAuth, db.session,
+                                             user=current_user,
+                                             user_required=False)
 
 
-@app.route("/glogin")
+app.register_blueprint(google_blueprint, url_prefix="/google_login")
+
+
+@app.route('/')
+@login_required
 def index():
+    return '<h1>You are logged in as {}</h1>'.format(current_user.name)
+
+
+@app.route("/google")
+def google_login():
     if not google.authorized:
         return redirect(url_for("google.login"))
-    resp = google.get(app.config['GOOGLE_OAUTH_CLIENT_USERINFO_URI'])
+    resp = google.get("/oauth2/v2/userinfo")
     assert resp.ok, resp.text
-    return "You are {email} on Google".format(email=resp.json()["email"])
+    return resp.text
+
+
+@oauth_authorized.connect_via(google_blueprint)
+def google_logged_in(blueprint, token):
+    from .models import user
+    User = user.User
+    resp = blueprint.session.get("/oauth2/v2/userinfo")
+    if resp.ok:
+        account_info_json = resp.json()
+        email = account_info_json['email']
+        query = User.query.filter_by(email=email)
+
+        try:
+            user = query.one()
+        except NoResultFound:
+            user = User()
+            user.name = account_info_json['name']
+            user.email = account_info_json['email']
+            db.session.add(user)
+            db.session.commit()
+        login_user(user, remember=True)
+
+
+@app.route('/logout')
+def logout():
+    """Revokes token and empties session."""
+    if google.authorized:
+        try:
+            google.get(
+                'https://accounts.google.com/o/oauth2/revoke',
+                params={
+                    'token':
+                    google.token['access_token']},
+            )
+        except InvalidClientIdError:
+            del google.token
+            redirect(url_for('index'))
+    session.clear()
+    logout_user()
+    return redirect(url_for('index'))
