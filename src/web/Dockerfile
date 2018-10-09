@@ -3,8 +3,10 @@ LABEL maintainer "Eric Gu <eric.changning.gu@gmail.com>"
 ENV INSTALL_PATH /web
 RUN mkdir -p $INSTALL_PATH
 WORKDIR $INSTALL_PATH
-COPY . .
+COPY requirements.txt .
 RUN pip install --upgrade pip -r requirements.txt
+COPY . .
+
 ENTRYPOINT [ "python" ]
 CMD [ "manage.py" ]
 
