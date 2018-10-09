@@ -10,19 +10,22 @@
             <article class="media content-section">
                 <div class="media-body">
                     <div class="article-metadata">
-                        <a class="mr-2">
-                            <span style="float: left"><b>{{item.name}}</b></span>
+                        <a class="mr-3">
+                            <span style="float: left" href="#"><b>{{item.name}}</b></span>
                             <span style="float: right"><small>{{ item.category.name }}</small></span>
                         </a>
                     </div>
-                    <br>
-                    <footer><small>
-                            <p>
-                                Posted on
-                                {{ item.update_date.strftime('%A %B %d, %Y' ) }}
-                                by <b>{{ item.user.name }}</b>.
-                            </p>
-                        </small>
+                    <p class="article-content"><small>{{ item.description }}</small></p>
+
+                    <footer>
+                        <span style="float: left"><small>
+                                <p>
+                                    Posted on
+                                    {{ item.update_date.strftime('%A %B %d, %Y' ) }}
+                                    by <b>{{ item.user.name }}</b>.
+                                </p>
+                            </small></span>
+                        <span style="float: right"><button type="button" class="btn btn-primary btn-sm">View Details</button></span>
                     </footer>
                 </div>
             </article>
@@ -36,7 +39,7 @@
             <ul class="list-group">
                 {% for category in categories %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    {{ category.name }}
+                    <a href="{{ url_for('category.items_by_category', category_id=category.id) }}">{{ category.name }}</a>
                     <span class="badge badge-primary badge-pill">{{ category.item_total }}</span>
                 </li>
                 {% endfor %}
