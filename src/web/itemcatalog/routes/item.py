@@ -18,7 +18,6 @@ def create_item():
                         category_id=form.category.data.id,
                         user_id=current_user.id)
         db.session.add(new_item)
-        print(new_item)
         db.session.commit()
         return redirect(url_for('main.index'))
     return render_template('create_item.html', form=form)

@@ -1,4 +1,30 @@
 {% extends "layout.html" %}
 {% block content %}
-    <h1>About Page</h1>
+{% for item in items %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ item.user_id }}</a>
+ 
+        </div>
+        <h2><a class="article-title" >{{ item.name }}</a></h2>
+        <p class="article-content">{{ item.description }}</p>
+    </div>
+</article>
+{% endfor %}
+<div class="col-md-4">
+    <div class="content-section" align="center">
+        <h3>Categories</h3>
+        <br>
+        <ul class="list-group">
+            {% for category in categories %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ category.name }}
+                    <span class="badge badge-primary badge-pill">{{ category.item_total }}</span>
+                  </li>
+            {% endfor %}
+        </ul>
+        <br>
+    </div>
+</div>
 {% endblock content %}
