@@ -2,6 +2,7 @@ from . import db
 from itemcatalog import login_manager
 from flask_login import UserMixin
 from flask_dance.consumer.backend.sqla import OAuthConsumerMixin
+from sqlalchemy import exc
 
 
 @login_manager.user_loader
@@ -34,6 +35,21 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return '<User {}>'.format(self.name)
+
+    @classmethod
+    def seed(cls, fake):
+        user = User(
+            name=fake.name(),
+            email=fake.email()
+        )
+        user.save()
+
+    def save(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+        except exc.IntegrityError:
+            db.session.rollback()
 
 
 class UserAuth(db.Model, OAuthConsumerMixin):
