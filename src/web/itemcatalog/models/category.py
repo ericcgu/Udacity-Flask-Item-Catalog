@@ -1,8 +1,9 @@
 from datetime import datetime
-from . import db
+from . import db, ma
 from sqlalchemy import exc
 from sqlalchemy_utils import aggregated
-from .item import Item
+from .item import Item, ItemSchema
+from marshmallow import fields
 
 
 class Category(db.Model):
@@ -20,18 +21,11 @@ class Category(db.Model):
     def item_total(self):
         return db.func.count(Item.id)
 
-    @property
-    def serialize(self):
-        """Return object data in easily serializeable format"""
-        return {
-            'id': self.id,
-            'name': self.name,
-            'insert_date': self.insert_date,
-            'update_date': self.update_date
-        }
-
     def __repr__(self):
         return '<Category {}>'.format(self.name)
+
+    def __hash__(self):
+        return hash(self.name)
 
     @classmethod
     def seed(cls, fake):
@@ -46,3 +40,11 @@ class Category(db.Model):
             db.session.commit()
         except exc.IntegrityError:
             db.session.rollback()
+
+
+class CategorySchema(ma.ModelSchema):
+    class Meta:
+        model = Category
+    items = fields.Nested(ItemSchema, many=True,
+                          only=['id', 'name', 'description',
+                                'insert_date', 'update_date'])

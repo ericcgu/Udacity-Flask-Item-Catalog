@@ -1,5 +1,7 @@
 from itemcatalog import app
 from flask_sqlalchemy import SQLAlchemy
-__all__ = ["db"]
+from flask_marshmallow import Marshmallow
+__all__ = ["db", "ma"]
 
 db = SQLAlchemy(app)
+ma = Marshmallow(app)

@@ -9,11 +9,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .bg-steel {
-  background-color: #0069D9;
+  background-color: #284860;
 }
 
 .site-header .navbar-nav .nav-link {
-  color: #ffffff;
+  color: white;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -34,11 +34,6 @@ h1, h2, h3, h4, h5, h6 {
 
 .article-title {
   color: #444444;
-}
-
-a {
-  color:black !important;
-  text-decoration: none;
 }
 
 a.article-title:hover {
@@ -83,12 +78,3 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
-
-.red .active a,
-.red .active a:hover {
-    background-color: #CF215B !important;
-}
-
-nav .navbar-nav li a{
-  color: white !important;
-  }

@@ -21,11 +21,16 @@
                         <span style="float: left"><small>
                                 <p>
                                     Posted on
-                                    {{ item.update_date.strftime('%A %B %d, %Y' ) }}
+                                    {{ item.insert_date.strftime('%A %B %d, %Y' ) }}
                                     by <b>{{ item.user.name }}</b>.
                                 </p>
                             </small></span>
-                        <span style="float: right"><button type="button" class="btn btn-primary btn-sm">View Details</button></span>
+                        {% if item.user == current_user %}    
+                        <span style="float: right">
+                            <button type="button" class="btn btn-primary btn-sm">Modify</button>
+                            <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                        </span>
+                        {% endif %}
                     </footer>
                 </div>
             </article>

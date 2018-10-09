@@ -13,7 +13,7 @@ class ValidEnvironments(Enum):
 class Default:
     APP_NAME = "itemcatalog"
     TESTING = True
-    SECRET_KEY = os.environ.get("SECRET_KEY") or "supersiikrit"
+    SECRET_KEY = os.environ.get("SECRET_KEY") or "A0Zr98jyX RHH!jmN]LWX/,?RT"
     ENV = os.environ.get("ENV") or ValidEnvironments.Development
     SERVER = os.environ.get("SERVER") or 'localhost'
 

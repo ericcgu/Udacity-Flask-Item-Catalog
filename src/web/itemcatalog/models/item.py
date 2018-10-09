@@ -1,5 +1,5 @@
 from datetime import datetime
-from . import db
+from . import db, ma
 
 
 class Item(db.Model):
@@ -16,18 +16,13 @@ class Item(db.Model):
     insert_date = db.Column(db.DateTime(), default=datetime.utcnow)
     update_date = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    @property
-    def serialize(self):
-        """Return object data in easily serializeable format"""
-        return {
-            'id': self.id,
-            'name': self.name,
-            'description': self.description,
-            'category': self.category,
-            'user': self.user,
-            'insert_date': self.insert_date,
-            'update_date': self.update_date
-        }
-
     def __repr__(self):
         return '<Item {}>'.format(self.name)
+
+    def __hash__(self):
+        return hash(self.name)
+
+
+class ItemSchema(ma.ModelSchema):
+    class Meta:
+        model = Item
