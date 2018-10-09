@@ -31,8 +31,8 @@ if app.config['TESTING'] is True:
 # Routes
 from itemcatalog.routes.userauth import userauth # noqa:E401
 from itemcatalog.routes.main import main # noqa:E401
-from itemcatalog.routes.category import category # noqa:E401
+from itemcatalog.routes.item import item # noqa:E401
 
 app.register_blueprint(userauth)
 app.register_blueprint(main)
-app.register_blueprint(category)
+app.register_blueprint(item)

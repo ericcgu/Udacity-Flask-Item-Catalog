@@ -6,7 +6,7 @@ class Item(db.Model):
     __tablename__ = 'items'
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(80), nullable=False)
+    name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(4000))
     category_id = db.Column(db.Integer, db.ForeignKey('category.id'),
                             nullable=False)
