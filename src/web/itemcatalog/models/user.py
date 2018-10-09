@@ -22,7 +22,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), nullable=False)
-    items = db.relationship('Item', backref='user', lazy=True)
+    item = db.relationship('Item', backref='user', lazy=True)
 
     @property
     def serialize(self):
