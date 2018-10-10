@@ -1,8 +1,8 @@
-import os
 import config  # noqa:E401
 from flask import Flask
 from flask_login import LoginManager
 from faker import Faker
+import os
 
 
 app = Flask(__name__)
@@ -28,7 +28,7 @@ if app.config['TESTING'] is True:
     for _ in range(5):
         category.Category.seed(fake)
 
-# Routes
+# Blueprints
 from itemcatalog.routes.userauth import userauth # noqa:E401
 from itemcatalog.routes.category import category # noqa:E401
 from itemcatalog.routes.item import item # noqa:E401

@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, session
+from flask import Blueprint, redirect, url_for, session, flash
 from flask_dance.contrib.google import make_google_blueprint, google
 from flask_dance.consumer.backend.sqla import SQLAlchemyBackend
 from flask_login import current_user, login_user, logout_user
@@ -27,6 +27,7 @@ app.register_blueprint(google_blueprint, url_prefix="/google_login")
 
 @userauth.route("/google_login")
 def google_login():
+    """redirect to Google to initiate oAuth2.0 dance"""
     if not google.authorized:
         return redirect(url_for("google.login"))
     resp = google.get("/oauth2/v2/userinfo")
@@ -36,6 +37,12 @@ def google_login():
 
 @oauth_authorized.connect_via(google_blueprint)
 def google_logged_in(blueprint, token):
+    """
+    Receives a signal that Google has authenticated User
+        1. Check response from instance of blueprint
+        2. Check if user exists from db via email
+        3. Create user in db if user does not exist
+    """
     from itemcatalog import user
     User = user.User
     resp = blueprint.session.get("/oauth2/v2/userinfo")
@@ -66,9 +73,11 @@ def google_logout():
                     'token':
                     google.token['access_token']},
             )
-        except InvalidClientIdError:  # token expiration
+        except InvalidClientIdError:
+            """Revokes token and empties session."""
             del google.token
             redirect(url_for('main.index'))
     session.clear()
     logout_user()
+    flash('You have been logged out!', 'success')
     return redirect(url_for('main.index'))

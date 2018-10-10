@@ -1,16 +1,19 @@
-import os
 from enum import Enum
+import os
+
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 class ValidEnvironments(Enum):
+    """Enum to control valid environment config inputs"""
     Development = 'Development',
     Test = 'Test',
     Production = 'Production'
 
 
 class Default:
+    """Default Configuration that all environments will default to"""
     APP_NAME = "itemcatalog"
     TESTING = True
     SECRET_KEY = os.environ.get("SECRET_KEY") or "A0Zr98jyX RHH!jmN]LWX/,?RT"
@@ -31,6 +34,7 @@ class Default:
 
 
 class Development(Default):
+    """Development environment"""
     DEBUG = False
     TESTING = True
     ENV = os.environ.get("ENV") or ValidEnvironments.Development
@@ -40,6 +44,7 @@ class Development(Default):
 
 
 class Test(Default):
+    """Continuous Integration (CI) / User Acceptance"""
     DEBUG = False
     TESTING = True
     ENV = os.environ.get("ENV") or ValidEnvironments.Test
@@ -49,6 +54,7 @@ class Test(Default):
 
 
 class Production(Default):
+    """Production"""
     DEBUG = False
     TESTING = False
     ENV = os.environ.get("ENV") or ValidEnvironments.Production

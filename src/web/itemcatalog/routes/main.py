@@ -12,7 +12,7 @@ main = Blueprint('main', __name__)
 def index():
     """Returns all items and categories"""
     categories = Category.query.filter(and_(Category.item_total.isnot(None), Category.item_total > 0)).order_by(Category.name) # noqa:501
-    items = Item.query.order_by(Item.update_date.desc())
+    items = Item.query.order_by(Item.time_updated.desc())
     return render_template('main.html', title='Home', categories=categories,
                            items=items, current_user=current_user)
 
