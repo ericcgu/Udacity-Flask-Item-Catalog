@@ -1,5 +1,5 @@
 from flask import (render_template, url_for,
-                   redirect, Blueprint)
+                   redirect, Blueprint, abort, flash)
 from flask_login import login_required
 from itemcatalog import db
 from itemcatalog.models.item import Item
@@ -21,3 +21,15 @@ def create_item():
         db.session.commit()
         return redirect(url_for('main.index'))
     return render_template('create_item.html', form=form)
+
+
+@item.route("/item/<int:item_id>/delete", methods=['POST'])
+@login_required
+def delete_item(item_id):
+    item = Item.query.get_or_404(item_id)
+    if item.user != current_user:
+        abort(403)
+    db.session.delete(item)
+    db.session.commit()
+    flash('Your job listing has been deleted!', 'success')
+    return redirect(url_for('main.index'))
