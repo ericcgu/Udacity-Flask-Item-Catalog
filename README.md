@@ -20,18 +20,18 @@ Python Flask Starter with oAuth 2.0
 ## Design and Architecture
 
 This application is organized around an MVC pattern. 
-
+```bash
 .
 ├── config
 └── app
-    ├── models      <----model
-    ├── routes      <----controller
-    ├── templates   <----view
+    ├── models      # Model
+    ├── routes      # Controller
+    ├── templates   # View
     ├── forms
     └── static
-
+```
 ## Concepts
-
+```bash
 .
 ├── Dockerfile
 ├── config
@@ -67,7 +67,7 @@ This application is organized around an MVC pattern.
 │       └── main.html
 ├── manage.py
 └── requirements.txt
-
+```
 ## Installation
 
 ### Requirements
