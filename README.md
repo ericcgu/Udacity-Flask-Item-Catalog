@@ -1,23 +1,28 @@
 # Item Catalog
 
+## Synopsis
+
 Udacity Full Stack Web Developer Logs Analysis Project
 [Full Stack Web Developer Nanodegree](https://www.udacity.com/course/full-stack-web-developer-nanodegree--nd004).
 
-## Introduction
+## Motivation
 
 
 
-## Requirements
+## Installation
+
+### Requirements
 
 Docker (https://www.docker.com/get-started)
 
-## Installing
+### Deploy
 
 ```bash
+cd src/web
 docker-compose up --build
 ```
 
-## Teardown
+### Teardown
 
 ```bash
 docker-compose down
