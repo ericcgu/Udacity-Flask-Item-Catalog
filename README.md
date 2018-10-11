@@ -20,6 +20,8 @@ Full Stack Python Flask SQLAlchemy Starter with Google oAuth 2.0
 
 ![screen shot 2018-10-11 at 12 44 56 am](https://user-images.githubusercontent.com/4943759/46781311-f89b2500-ccee-11e8-8cca-7db4ab5ba128.png)
 
+![screen shot 2018-10-11 at 12 54 56 am](https://user-images.githubusercontent.com/4943759/46781655-ae1aa800-ccf0-11e8-9215-633493a16738.png)
+
 ## Design and Architecture
 
 This application is organized around a MVC pattern. 
