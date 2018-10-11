@@ -22,11 +22,12 @@ db.session.commit()
 if app.config['TESTING'] is True:
     fake = Faker()
 
-    for _ in range(100):
+    for _ in range(5):
         user.User.seed(fake)
 
-    for _ in range(5):
+    for _ in range(50):
         category.Category.seed(fake)
+
 
 # Blueprints
 from itemcatalog.routes.userauth import userauth # noqa:E401

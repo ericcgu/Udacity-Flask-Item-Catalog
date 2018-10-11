@@ -4,7 +4,6 @@ services:
   web:
     build: .
     environment:
-      COMPOSE_PROJECT_NAME: itemcatalog
       ENV: "Development"
       PYTHONUNBUFFERED: 1
       PYTHONDONTWRITEBYTECODE: 1

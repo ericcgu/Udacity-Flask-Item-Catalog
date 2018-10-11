@@ -13,14 +13,11 @@ class Item(db.Model):
                             nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
                         nullable=False)
-    insert_date = db.Column(db.DateTime(), default=datetime.utcnow)
-    update_date = db.Column(db.DateTime(), default=datetime.utcnow)
+    time_inserted = db.Column(db.DateTime(), default=datetime.utcnow)
+    time_updated = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    def __repr__(self):
-        return '<Item {}>'.format(self.name)
-
-    def __hash__(self):
-        return hash(self.name)
+    def __len__(self):
+        return len(self)
 
 
 class ItemSchema(ma.ModelSchema):

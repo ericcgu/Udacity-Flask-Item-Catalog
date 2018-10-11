@@ -38,7 +38,8 @@ def google_login():
 @oauth_authorized.connect_via(google_blueprint)
 def google_logged_in(blueprint, token):
     """
-    Receives a signal that Google has authenticated User
+    Receives a signal that Google has authenticated User via
+    instance of blueprint and token
         1. Check response from instance of blueprint
         2. Check if user exists from db via email
         3. Create user in db if user does not exist

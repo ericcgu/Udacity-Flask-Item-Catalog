@@ -1,4 +1,5 @@
 from . import db
+from datetime import datetime
 from itemcatalog import login_manager
 from flask_login import UserMixin
 from flask_dance.consumer.backend.sqla import OAuthConsumerMixin
@@ -23,18 +24,8 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), nullable=False)
     items = db.relationship('Item', backref='user', lazy=True)
-
-    @property
-    def serialize(self):
-        """Return object data in easily serializeable format"""
-        return {
-            'id': self.id,
-            'name': self.name,
-            'email': self.email
-        }
-
-    def __repr__(self):
-        return '<User {}>'.format(self.name)
+    time_inserted = db.Column(db.DateTime(), default=datetime.utcnow)
+    time_updated = db.Column(db.DateTime(), default=datetime.utcnow)
 
     @classmethod
     def seed(cls, fake):

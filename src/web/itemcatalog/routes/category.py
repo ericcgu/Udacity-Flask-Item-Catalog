@@ -7,7 +7,7 @@ category = Blueprint('category', __name__)
 
 @category.route('/category/<int:category_id>/')
 def items_by_category(category_id):
-    """returns items, category for a specific category"""
+    """Returns items, category for a specific category"""
     filtered_categories = Category.query.filter_by(id=category_id)
     category = filtered_categories[0]
     return render_template('main.html', title=category.name,

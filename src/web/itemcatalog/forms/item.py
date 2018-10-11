@@ -14,5 +14,6 @@ class ItemForm(FlaskForm):
     description = TextAreaField('Description', validators=[DataRequired()])
     category = QuerySelectField(u'Category',
                                 get_label=u"name",
-                                query_factory=all_categories)
-    submit = SubmitField('Create Item')
+                                query_factory=all_categories,
+                                allow_blank=False)
+    submit = SubmitField('Post')
