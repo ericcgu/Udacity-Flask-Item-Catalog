@@ -4,7 +4,7 @@ from flask_login import current_user, login_required
 from itemcatalog import db
 from itemcatalog.models.item import Item
 from itemcatalog.forms.item import ItemForm
-
+from sqlalchemy import func
 
 item = Blueprint('item', __name__)
 
@@ -41,6 +41,7 @@ def update_item(item_id):
         item.name = form.name.data
         item.description = form.description.data
         item.category = form.category.data
+        item.time_updated = func.now()
         db.session.commit()
         flash('Your job listing has been successfully updated!', 'success')
         return redirect(url_for('main.index'))

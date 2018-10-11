@@ -17,7 +17,7 @@ def load_user(user_id):
 
 
 class User(db.Model, UserMixin):
-
+    """Model to define User"""
     __tablename__ = 'user'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -29,6 +29,7 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def seed(cls, fake):
+        """class utility to create fake accounts to see the db"""
         user = User(
             name=fake.name(),
             email=fake.email()
@@ -36,6 +37,7 @@ class User(db.Model, UserMixin):
         user.save()
 
     def save(self):
+        """persists obj to db"""
         try:
             db.session.add(self)
             db.session.commit()
@@ -44,7 +46,7 @@ class User(db.Model, UserMixin):
 
 
 class UserAuth(db.Model, OAuthConsumerMixin):
-
+    """Model to define UserAuth to store oAuth tokens"""
     __tablename__ = 'userauth'
 
     user_id = db.Column(db.Integer, db.ForeignKey(User.id))

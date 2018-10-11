@@ -3,6 +3,7 @@ from . import db, ma
 
 
 class Item(db.Model):
+    """Model to define Item"""
 
     __tablename__ = 'item'
 
@@ -16,10 +17,8 @@ class Item(db.Model):
     time_inserted = db.Column(db.DateTime(), default=datetime.utcnow)
     time_updated = db.Column(db.DateTime(), default=datetime.utcnow)
 
-    def __len__(self):
-        return len(self)
-
 
 class ItemSchema(ma.ModelSchema):
+    """Define marshmallow schema"""
     class Meta:
         model = Item
