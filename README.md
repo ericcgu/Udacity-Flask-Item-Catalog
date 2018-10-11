@@ -10,11 +10,63 @@
 
 - [Motivation](##Motivation)
 - [Design & Architecture](#Design-and-Architecture)
+- [Concepts](#Concepts)
 - [Installation](#Installation)
 
 ## Motivation
 
+Python Flask Starter with oAuth 2.0
+
 ## Design and Architecture
+
+This application is organized around an MVC pattern. 
+
+.
+├── config
+└── app
+    ├── models      <----model
+    ├── routes      <----controller
+    ├── templates   <----view
+    ├── forms
+    └── static
+
+## Concepts
+
+.
+├── Dockerfile
+├── config
+│   └── settings.py
+├── docker-compose.yml
+├── app
+│   ├── egu-nyc-dev-001.db
+│   ├── forms
+│   │   └── item.py
+│   ├── models
+│   │   ├── category.py
+│   │   ├── item.py
+│   │   └── user.py
+│   ├── routes
+│   │   ├── category.py
+│   │   ├── errorhandlers.py
+│   │   ├── item.py
+│   │   ├── main.py
+│   │   └── userauth.py
+│   ├── services
+│   ├── static
+│   │   ├── img
+│   │   │   └── google.png
+│   │   └── styles
+│   │       └── main.css
+│   └── templates
+│       ├── errors
+│       │   ├── 403.html
+│       │   ├── 404.html
+│       │   └── 500.html
+│       ├── item.html
+│       ├── layout.html
+│       └── main.html
+├── manage.py
+└── requirements.txt
 
 ## Installation
 
