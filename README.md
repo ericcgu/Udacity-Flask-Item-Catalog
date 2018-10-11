@@ -11,15 +11,16 @@
 - [Motivation](##Motivation)
 - [Design & Architecture](#Design-and-Architecture)
 - [Concepts](#Concepts)
+- [Docker](##Docker)
 - [Installation](#Installation)
 
-## Motivation
+## Synopsis
 
-Python Flask Starter with oAuth 2.0
+Python Flask SQLAlchemy Starter with Google oAuth 2.0
 
 ## Design and Architecture
 
-This application is organized around an MVC pattern. 
+This application is organized around a MVC pattern. 
 ```bash
 .
 ├── config
@@ -30,7 +31,8 @@ This application is organized around an MVC pattern.
     ├── forms
     └── static
 ```
-## Concepts
+Functionality is isolated and installed via package modules to promote code re-use and collaboration.
+
 ```bash
 .
 ├── Dockerfile
@@ -68,6 +70,11 @@ This application is organized around an MVC pattern.
 ├── manage.py
 └── requirements.txt
 ```
+
+* `Docker`  - Dockerfile is optimized for pip caching. Other services can be orchestrated via Docker-Compose
+* `authors` - Contains list of authors who have published their articles.
+* `log` - Stores log of every request sent to the newspaper server.
+
 ## Installation
 
 ### Requirements
