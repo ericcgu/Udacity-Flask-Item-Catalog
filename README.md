@@ -14,13 +14,16 @@
 - [Docker](##Docker)
 - [Installation](#Installation)
 
-## Full Stack Python Flask SQLAlchemy Starter with Google oAuth 2.0
+## Synopsis
+
+Full Stack Python Flask SQLAlchemy Starter with Google oAuth 2.0
 
 ![screen shot 2018-10-11 at 12 44 56 am](https://user-images.githubusercontent.com/4943759/46781311-f89b2500-ccee-11e8-8cca-7db4ab5ba128.png)
 
 ## Design and Architecture
 
 This application is organized around a MVC pattern. 
+
 ```bash
 .
 ├── config
@@ -31,9 +34,9 @@ This application is organized around a MVC pattern.
     ├── forms
     └── static
 ```
-Functionality is isolated and de-coupled for single responsiblity as much as possible. 
+Modules/Features are isolated and de-coupled for single responsiblity. 
 
-Package modules to promote code re-use and collaboration.
+Organized into Package modules to promote code readability, re-use and collaboration.
 
 ```bash
 .
@@ -61,7 +64,7 @@ Package modules to promote code re-use and collaboration.
 │   │   │   └── google.png
 │   │   └── styles
 │   │       └── main.css
-│   └── templates
+│   └── templates             # Limited and avoided logic in templates. Used Bootstrap and modal window.
 │       ├── errors
 │       │   ├── 403.html      # Custom error handlers
 │       │   ├── 404.html
