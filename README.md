@@ -31,20 +31,21 @@ This application is organized around a MVC pattern.
     ├── forms
     └── static
 ```
-Functionality is isolated and installed via package modules to promote code re-use and collaboration.
+Functionality is isolated and de-coupled for single responsiblity as much as possible. 
+Package modules to promote code re-use and collaboration.
 
 ```bash
 .
-├── Dockerfile
-├── config
-│   └── settings.py
+├── Dockerfile                  #Dockerfile is optimized for pip caching.
+├── config                      
+│   └── settings.py             #Considered YAML, environment classes inherit from Default class.
 ├── docker-compose.yml
 ├── app
-│   ├── egu-nyc-dev-001.db
+│   ├── egu-nyc-dev-001.db      #Required db objects are seeded with Faker library.
 │   ├── forms
-│   │   └── item.py
+│   │   └── item.py             #Create/Update share common form.
 │   ├── models
-│   │   ├── category.py
+│   │   ├── category.py         #Used hybrid property and hybrid expression to dynamically calc child relationships.
 │   │   ├── item.py
 │   │   └── user.py
 │   ├── routes
@@ -74,6 +75,20 @@ Functionality is isolated and installed via package modules to promote code re-u
 * `Docker`  - Dockerfile is optimized for pip caching. Other services can be orchestrated via Docker-Compose
 * `authors` - Contains list of authors who have published their articles.
 * `log` - Stores log of every request sent to the newspaper server.
+
+``` python
+
+    @hybrid_property
+    def item_count(self):
+        return len(self.items)
+
+    @item_count.expression
+    def item_count(cls):
+        return (select([func.count(Item.id)])
+                .where(Item.category_id == cls.id)
+                .label("item_count"))
+```
+
 
 ## Installation
 
