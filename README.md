@@ -42,23 +42,23 @@ Organized into Package modules to promote code readability, re-use and collabora
 
 ```bash
 .
-├── Dockerfile                #Dockerfile is optimized for pip-install Container caching.
+├── Dockerfile                # Dockerfile is optimized for pip-install Container caching.
 ├── config                      
-│   └── settings.py           Considered YAML, environment classes inherit from Default class.
+│   └── settings.py           # Considered YAML, environment classes inherit from Default class.
 ├── docker-compose.yml
 ├── app
-│   ├── egu-nyc-dev-001.db    #Required db objects are seeded with Faker library.
+│   ├── egu-nyc-dev-001.db    # Required db objects are seeded with Faker library.
 │   ├── forms
-│   │   └── item.py           #Create/Update re-leverage/share unified form.
+│   │   └── item.py           # Create/Update re-leverage/share unified form.
 │   ├── models
-│   │   ├── category.py       #Hybrid property/expression to dynamically calc child relationships.
+│   │   ├── category.py       # Hybrid property/expression to dynamically calc child relationships.
 │   │   ├── item.py
 │   │   └── user.py
 │   ├── routes
 │   │   ├── category.py
 │   │   ├── errorhandlers.py
 │   │   ├── item.py
-│   │   ├── main.py
+│   │   ├── main.py           # Leveraged marshmallow for serialization. Single endpoint with nested children.
 │   │   └── userauth.py       # Receives a signal/instance of blueprint and token via Flask-Dance.
 │   ├── services
 │   ├── static
@@ -90,6 +90,13 @@ Organized into Package modules to promote code readability, re-use and collabora
                 .where(Item.category_id == cls.id)
                 .label("item_count"))
 ```
+## Docker
+
+## API
+
+```bash
+http://localhost:8000/
+```
 
 ## Installation
 
@@ -100,9 +107,10 @@ Docker (https://www.docker.com/get-started)
 ### Deploy
 
 ```bash
-#clone repo
+# Clone this repository using git
 cd src/web
 docker-compose up --build
+# Navigate to http://localhost:8000/
 ```
 
 ### Teardown
